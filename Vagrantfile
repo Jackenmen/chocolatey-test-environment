@@ -25,12 +25,12 @@ Vagrant.configure("2") do |config|
   config.vm.provider :virtualbox do |v, override|
     # Show the GUI
     v.gui = true
-    # 4GB RAM
-    v.customize ["modifyvm", :id, "--memory", "4096"]
-    # 2 CPUs
-    v.customize ["modifyvm", :id, "--cpus", "2"]
-    # Video RAM is 32 MB
-    v.customize ["modifyvm", :id, "--vram", 32]
+    # 8GB RAM
+    v.customize ["modifyvm", :id, "--memory", "8196"]
+    # 8 CPUs
+    v.customize ["modifyvm", :id, "--cpus", "8"]
+    # Video RAM is 128 MB
+    v.customize ["modifyvm", :id, "--vram", 128]
     # For better DNS resolution
     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     # No audo
@@ -47,11 +47,11 @@ Vagrant.configure("2") do |config|
   # https://www.vagrantup.com/docs/hyperv/configuration.html
   # https://technet.microsoft.com/en-us/library/dn798297(v=ws.11).aspx
   config.vm.provider :hyperv do |v, override|
-    # 4GB RAM
-    v.memory = 4096
+    # 8GB RAM
+    v.memory = 8196
     v.maxmemory = nil
-    # 2 CPUs
-    v.cpus = 2
+    # 8 CPUs
+    v.cpus = 8
     # The time in seconds to wait for the virtual machine to report an IP address
     v.ip_address_timeout = 240
     # Use differencing disk instead of cloning whole VHD
@@ -75,7 +75,7 @@ Vagrant.configure("2") do |config|
   # username/password for accessing the image
   config.winrm.username = "vagrant"
   config.winrm.password = "vagrant"
-  config.winrm.port = 55985
+  config.winrm.port = 45985
   # a long boot timeout is needed for slow host systems
   config.vm.boot_timeout = 1800
   # to avoid WinRM errors in the middle of booting, we ensure that (max_tries * retry_delay) > boot_timeout:
@@ -106,7 +106,7 @@ Vagrant.configure("2") do |config|
   # Port forward WinRM / RDP
   # Vagrant 1.9.3 - if you run into Errno::EADDRNOTAVAIL (https://github.com/mitchellh/vagrant/issues/8395),
   #  add host_ip: "127.0.0.1" for it to work
-  config.vm.network :forwarded_port, guest: 5985, host: 55985, id: "winrm", auto_correct: true #, host_ip: "127.0.0.1"
+  config.vm.network :forwarded_port, guest: 5985, host: 45985, id: "winrm", auto_correct: true #, host_ip: "127.0.0.1"
   config.vm.network :forwarded_port, guest: 3389, host: 3389, id: "rdp", auto_correct: true #, host_ip: "127.0.0.1"
   # Port forward SSH (ssh is forwarded by default in most versions of Vagrant,
   # but be sure). This is not necessary if you are not using SSH, but it doesn't
@@ -143,6 +143,7 @@ Write-Output "Testing package if a line is uncommented."
 # - See the README for details
 #choco.exe install -fdvy INSERT_NAME --version INSERT_VERSION  --allow-downgrade
 #choco.exe install -fdvy INSERT_NAME  --allow-downgrade --source "'c:\\packages;http://chocolatey.org/api/v2/'"
+#choco.exe uninstall -fdvy INSERT_NAME --allow-downgrade --source "'c:\\packages;http://chocolatey.org/api/v2/'"
 
 $exitCode = $LASTEXITCODE
 
